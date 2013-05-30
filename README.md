@@ -28,18 +28,18 @@ Usage:
 To use this with OmniAuth Identity, override the authenticate method
 and check for Drupal hashed passwords.
 
-Put this in your ActiveRecord Identity class
+Put this in your ActiveRecord Identity class and it will confirm the Drupal
+hash and then rehash the password using the Identity configuration (bcrypt)
 
-    # Handle Drupal passwords
     alias_method :authenticate_base, :authenticate
     def authenticate(password)
+      # Handle Drupal passwords
       if self.password_digest[0..2] == '$S$'
         if OmniAuth::DrupalPasswordHasher.new.verify(password, self.password_digest)
-          return self
-        else
-          return nil
+          self.password = password
+          self.password_confirmation = password
+          self.save!
         end
-      else
-        return authenticate_base(password)
       end
+      return authenticate_base(password)
     end
