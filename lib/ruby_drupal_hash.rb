@@ -1,3 +1,19 @@
+###############################################################################
+#   Copyright 2013 Ben Walding
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+###############################################################################
+
 =begin
 RubyDrupalHash.new.verify("password1234", "$S$DeIZ1KTE.VzRvudZ5.xgOakipuMFrVyPmRdWTjAdYieWj27NMglI")
 =end
@@ -40,7 +56,6 @@ class RubyDrupalHash
     hash_length = pass_hash.length
 
     output = setting + _password_base64_encode(pass_hash, hash_length)
-    binding.pry
 
     if output.length != 98
       return false

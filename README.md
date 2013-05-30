@@ -14,3 +14,4 @@ Usage:
 
   hash = RubyDrupalHash.new
   hash.verify("password1234", "$S$DeIZ1KTE.VzRvudZ5.xgOakipuMFrVyPmRdWTjAdYieWj27NMglI")
+
