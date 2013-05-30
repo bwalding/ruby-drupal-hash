@@ -12,6 +12,12 @@ It was modelled off the Django implementation.
 
 Usage:
 
-  hash = RubyDrupalHash.new
-  hash.verify("password1234", "$S$DeIZ1KTE.VzRvudZ5.xgOakipuMFrVyPmRdWTjAdYieWj27NMglI")
+    hasher = RubyDrupalHash.new
+    password = "password1234"
+    hash = "$S$DeIZ1KTE.VzRvudZ5.xgOakipuMFrVyPmRdWTjAdYieWj27NMglI"
+    if hasher.verify(password, hash)
+      puts "Password matches"
+    else
+      puts "Password does not match"
+    end
 
