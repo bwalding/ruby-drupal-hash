@@ -21,3 +21,25 @@ Usage:
       puts "Password does not match"
     end
 
+
+
+# OmniAuth Identity
+
+To use this with OmniAuth Identity, override the authenticate method
+and check for Drupal hashed passwords.
+
+Put this in your ActiveRecord Identity class
+
+    # Handle Drupal passwords
+    alias_method :authenticate_base, :authenticate
+    def authenticate(password)
+      if self.password_digest[0..2] == '$S$'
+        if OmniAuth::DrupalPasswordHasher.new.verify(password, self.password_digest)
+          return self
+        else
+          return nil
+        end
+      else
+        return authenticate_base(password)
+      end
+    end
