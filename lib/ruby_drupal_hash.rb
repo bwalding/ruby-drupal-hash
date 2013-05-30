@@ -27,6 +27,8 @@ class RubyDrupalHash
   HASH = Digest::SHA2.new(512)
 
   def verify(password, hashed_password)
+    return false if password.nil? or hashed_password.nil?
+    
     setting = hashed_password[0..11]
     if setting[0] != '$' or setting[2] != '$'
       # Wrong hash format

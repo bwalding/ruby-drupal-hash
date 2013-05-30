@@ -17,10 +17,36 @@ require 'spec_helper'
 
 describe RubyDrupalHash do
   before :each do
-    @hash = RubyDrupalHash.new
+    @hasher = RubyDrupalHash.new
   end
 
   it "verifies a valid password" do
-    @hash.verify("password1234", "$S$DeIZ1KTE.VzRvudZ5.xgOakipuMFrVyPmRdWTjAdYieWj27NMglI").should be_true
+    password = "password1234"
+    hash = "$S$DeIZ1KTE.VzRvudZ5.xgOakipuMFrVyPmRdWTjAdYieWj27NMglI"
+    @hasher.verify(password, hash).should be_true
+  end
+
+  it "does not verify a nil password" do
+    password = nil
+    hash = "$S$DeIZ1KTE.VzRvudZ5.xgOakipuMFrVyPmRdWTjAdYieWj27NMglI"
+    @hasher.verify(password, hash).should be_false
+  end
+
+  it "does not verify a blank password" do
+    password = ''
+    hash = "$S$DeIZ1KTE.VzRvudZ5.xgOakipuMFrVyPmRdWTjAdYieWj27NMglI"
+    @hasher.verify(password, hash).should be_false
+  end
+
+  it "does not verify a similar password" do
+    password = 'password12345'
+    hash = "$S$DeIZ1KTE.VzRvudZ5.xgOakipuMFrVyPmRdWTjAdYieWj27NMglI"
+    @hasher.verify(password, hash).should be_false
+  end
+
+  it "does not verify a similar hash" do
+    password = 'password1234'
+    hash = "$S$DeIZ1KTE.VzRvudZ5.xgOakipuMFrVyPmRdWTjAdYieWj27NMgl1"
+    @hasher.verify(password, hash).should be_false
   end
 end
