@@ -49,4 +49,10 @@ describe RubyDrupalHash do
     hash = "$S$DeIZ1KTE.VzRvudZ5.xgOakipuMFrVyPmRdWTjAdYieWj27NMgl1"
     @hasher.verify(password, hash).should be_false
   end
+
+  it "verifies valid UTF-8 password" do
+    password = 'påssword1234'
+    hash = "$S$DeIZ1KTE.VzRvudZ5.xgOakipuMFrVyPmRdWTjAdYieWj27NMgl1"
+    @hasher.verify(password, hash).should be_false
+  end
 end
